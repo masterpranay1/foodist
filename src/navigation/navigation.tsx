@@ -21,7 +21,8 @@ function AppScreens() {
         },
       }}
       sceneContainerStyle={{
-        padding: 16,
+        padding: 0,
+        backgroundColor: "#fff",
       }}
     >
       <Tab.Screen
