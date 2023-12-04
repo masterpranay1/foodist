@@ -8,12 +8,10 @@ import Home from "./src/navigation/navigation";
 export default function App() {
   return (
     <Provider store={store}>
-    {/* // <> */}
-      {/* // <StatusBar style="auto" /> */}
-      {/* // <SafeAreaView className="flex-1 mt-12"> */}
+      <SafeAreaView className="flex-1 mt-12">
+        <StatusBar style="auto" />
         <Home />
-      {/* // </SafeAreaView> */}
-    {/* // </> */}
+      </SafeAreaView>
     </Provider>
   );
 }
