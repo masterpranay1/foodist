@@ -1,5 +1,5 @@
 import { Icon, Input } from "@rneui/themed";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
 
@@ -62,9 +62,18 @@ const Homepage = () => {
 
   const renderRestaurantCard = ({ item }: { item: Restaurant }) => (
     <View style={styles.restaurantCard}>
-      <Text style={styles.restaurantName}>{item.name}</Text>
+      <Image
+        source={{ uri: `https://picsum.photos/200/300?random=${item.id}` }}
+        style={styles.restaurantImage}
+      />
+      <View className="flex-row items-center">
+        <Text style={styles.restaurantName}>{item.name}</Text>
+        <View style={styles.restaurantRating} className="flex-row items-center gap-1">
+          <Text className="text-md">{item.rating}</Text>
+          <Icon name="star" size={20} color="orange" />
+        </View>
+      </View>
       <Text style={styles.restaurantCuisine}>{item.cuisine}</Text>
-      <Text style={styles.restaurantRating}>Rating: {item.rating}</Text>
     </View>
   );
 
@@ -105,6 +114,7 @@ const Homepage = () => {
         contentContainerStyle={{
           padding: 16,
         }}
+        className="mt-4"
       />
     </GestureHandlerRootView>
   );
@@ -125,6 +135,12 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
     elevation: 2,
   },
+  restaurantImage: {
+    width: "100%",
+    height: 200,
+    marginBottom: 8,
+    borderRadius: 8,
+  },
   restaurantName: {
     fontSize: 18,
     fontWeight: "bold",
@@ -134,8 +150,9 @@ const styles = StyleSheet.create({
     color: "gray",
   },
   restaurantRating: {
-    fontSize: 14,
     color: "orange",
+    marginLeft: "auto",
+    flexDirection: "row",
   },
 });
 
