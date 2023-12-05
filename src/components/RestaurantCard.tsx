@@ -4,7 +4,6 @@ import { Icon } from "@rneui/base";
 interface Restaurant {
   id: string;
   name: string;
-  cuisine: string;
   rating: number;
 }
 
