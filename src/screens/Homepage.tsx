@@ -7,7 +7,6 @@ import { RestaurantCard, SearchInput } from "../components";
 interface Restaurant {
   id: string;
   name: string;
-  cuisine: string;
   rating: number;
 }
 
@@ -22,44 +21,27 @@ const Homepage = () => {
     }
   }, [address]);
 
-  const restaurants: Restaurant[] = [
-    {
-      id: "1",
-      name: "Restaurant 1",
-      cuisine: "Italian",
-      rating: 4.5,
-    },
-    {
-      id: "2",
-      name: "Restaurant 2",
-      cuisine: "Mexican",
-      rating: 4.2,
-    },
-    {
-      id: "3",
-      name: "Restaurant 3",
-      cuisine: "Chinese",
-      rating: 4.7,
-    },
-    {
-      id: "4",
-      name: "Restaurant 4",
-      cuisine: "Italian",
-      rating: 4.5,
-    },
-    {
-      id: "5",
-      name: "Restaurant 5",
-      cuisine: "Mexican",
-      rating: 4.2,
-    },
-    {
-      id: "6",
-      name: "Restaurant 6",
-      cuisine: "Chinese",
-      rating: 4.7,
-    },
-  ];
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+        // using ngrok to expose localhost to the internet
+        const res = await fetch('https://1703-2401-4900-1c70-fdc9-b139-1bd4-d3aa-31a.ngrok.io/api/collections/restaurants/records')
+        const data = await res.json();
+        const restaurants = data.items.map((item: any) => ({
+          id: item.id,
+          name: item.Name,
+          rating: item.Rating,
+        }));
+        setRestaurants(restaurants);
+      } catch(err) {
+        console.error(err);
+      }
+    };
+
+    fetchRestaurants();
+  }, []);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -72,15 +54,18 @@ const Homepage = () => {
         <SearchInput />
       </View>
 
-      <FlatList
-        data={restaurants}
-        renderItem={RestaurantCard}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={{
-          padding: 16,
-        }}
-        className="mt-4"
-      />
+      {restaurants.length > 0 ? (
+        <FlatList
+          data={restaurants}
+          renderItem={({ item }) => <RestaurantCard item={item} />}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={{ paddingHorizontal: 16 }}
+        />
+      ) : (
+        <Text className="text-center text-2xl font-bold mt-4">
+          No restaurants found
+        </Text>
+      )}
     </GestureHandlerRootView>
   );
 };
