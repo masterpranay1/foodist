@@ -1,5 +1,5 @@
 import { Icon, Input } from "@rneui/themed";
-import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import { View, Text, Image } from "react-native";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
 
@@ -61,19 +61,32 @@ const Homepage = () => {
   ];
 
   const renderRestaurantCard = ({ item }: { item: Restaurant }) => (
-    <View style={styles.restaurantCard}>
+    <View
+      className="bg-white rounded-lg mb-8"
+      style={{
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 1,
+        elevation: 2,
+      }}
+    >
       <Image
         source={{ uri: `https://picsum.photos/200/300?random=${item.id}` }}
-        style={styles.restaurantImage}
+        className="rounded-lg w-full h-64 mb-2"
       />
-      <View className="flex-row items-center">
-        <Text style={styles.restaurantName}>{item.name}</Text>
-        <View style={styles.restaurantRating} className="flex-row items-center gap-1">
-          <Text className="text-md">{item.rating}</Text>
-          <Icon name="star" size={20} color="orange" />
+      <View className="flex-row items-center p-4">
+        <Text className="text-2xl font-bold">{item.name}</Text>
+        <View className="flex-row items-center ml-auto py-2 px-2 rounded-lg bg-orange-400">
+          <Text className="text-md text-white">
+            {item.rating}
+          </Text>
+          <Icon name="star" size={20} color="white" />
         </View>
       </View>
-      <Text style={styles.restaurantCuisine}>{item.cuisine}</Text>
     </View>
   );
 
@@ -119,41 +132,5 @@ const Homepage = () => {
     </GestureHandlerRootView>
   );
 };
-
-const styles = StyleSheet.create({
-  restaurantCard: {
-    backgroundColor: "white",
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 16,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
-    elevation: 2,
-  },
-  restaurantImage: {
-    width: "100%",
-    height: 200,
-    marginBottom: 8,
-    borderRadius: 8,
-  },
-  restaurantName: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  restaurantCuisine: {
-    fontSize: 16,
-    color: "gray",
-  },
-  restaurantRating: {
-    color: "orange",
-    marginLeft: "auto",
-    flexDirection: "row",
-  },
-});
 
 export default Homepage;
