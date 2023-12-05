@@ -31,8 +31,8 @@ const Homepage = () => {
         const data = await res.json();
         const restaurants = data.items.map((item: any) => ({
           id: item.id,
-          name: item.Name,
-          rating: item.Rating,
+          name: item.name,
+          rating: item.rating,
         }));
         setRestaurants(restaurants);
       } catch(err) {
