@@ -4,6 +4,7 @@ import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
 import { RestaurantCard, SearchInput, DishCard } from "../components";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { ngrok } from "../constants";
 
 type DishCardProps = {
   dishTitle: string;
@@ -23,7 +24,7 @@ const RestaurantPage = () => {
       try {
         // using ngrok to expose localhost to the internet
         const res = await fetch(
-          `https://5e05-2401-4900-1c70-fdc9-9497-83cd-a627-398c.ngrok.io/api/collections/dishes/records?filter=(restaurant='${id}')`
+          `${ngrok}/api/collections/dishes/records?filter=(restaurant='${id}')`
         );
         const data = await res.json();
         const dishes = data.items.map((record: any) => ({

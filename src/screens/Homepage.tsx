@@ -3,6 +3,7 @@ import { View, Text } from "react-native";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
 import { RestaurantCard, SearchInput } from "../components";
+import { ngrok } from "../constants";
 
 interface Restaurant {
   id: string;
@@ -27,7 +28,7 @@ const Homepage = () => {
     const fetchRestaurants = async () => {
       try {
         // using ngrok to expose localhost to the internet
-        const res = await fetch('https://5e05-2401-4900-1c70-fdc9-9497-83cd-a627-398c.ngrok.io/api/collections/restaurants/records')
+        const res = await fetch(`${ngrok}/api/collections/restaurants/records`)
         const data = await res.json();
         const restaurants = data.items.map((item: any) => ({
           id: item.id,
