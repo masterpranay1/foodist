@@ -27,7 +27,7 @@ const Homepage = () => {
     const fetchRestaurants = async () => {
       try {
         // using ngrok to expose localhost to the internet
-        const res = await fetch('https://1703-2401-4900-1c70-fdc9-b139-1bd4-d3aa-31a.ngrok.io/api/collections/restaurants/records')
+        const res = await fetch('https://5e05-2401-4900-1c70-fdc9-9497-83cd-a627-398c.ngrok.io/api/collections/restaurants/records')
         const data = await res.json();
         const restaurants = data.items.map((item: any) => ({
           id: item.id,
@@ -51,7 +51,7 @@ const Homepage = () => {
       </View>
 
       <View className="m-2 rounded-2xl">
-        <SearchInput />
+        <SearchInput placeholder="Search Restaurant"/>
       </View>
 
       {restaurants.length > 0 ? (

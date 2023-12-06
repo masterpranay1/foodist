@@ -1,10 +1,12 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { Homepage, History, Profile } from "../screens";
+import { Homepage, History, Profile, RestaurantPage } from "../screens";
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 function AppScreens() {
   return (
@@ -24,6 +26,7 @@ function AppScreens() {
         padding: 0,
         backgroundColor: "#fff",
       }}
+      initialRouteName="Home"
     >
       <Tab.Screen
         name="Home"
@@ -59,10 +62,27 @@ function AppScreens() {
   );
 }
 
+const HomeStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        contentStyle: {
+          backgroundColor: "#fff",
+        },
+      }}
+      initialRouteName="First"
+    >
+      <Stack.Screen name="First" component={AppScreens} />
+      <Stack.Screen name="RestaurantPage" component={RestaurantPage} />
+    </Stack.Navigator>
+  );
+}
+
 export default function Home() {
   return (
     <NavigationContainer>
-      <AppScreens />
+      <HomeStack />
     </NavigationContainer>
   );
 }
