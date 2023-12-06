@@ -1,13 +1,15 @@
 import React from "react";
 import { Input, Icon } from "@rneui/base";
 
-const SearchInput = () => {
+const SearchInput = ({ placeholder } : {
+  placeholder: string;
+}) => {
   return (
     <Input
-      placeholder="Search"
+      placeholder={placeholder}
       leftIcon={<Icon name="search" size={32} color="orange" />}
       containerStyle={{
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: "gray",
         borderRadius: 16,
         padding: 8,
