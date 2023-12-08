@@ -1,1 +1,1 @@
-export const ngrok = 'https://3574-2401-4900-1c70-fdc9-8e3e-805c-de6d-aac4.ngrok.io'
+export const ngrok = 'https://1525-2401-4900-1c6e-dc77-21bc-272b-1a74-62d4.ngrok-free.app'
