@@ -1,4 +1,4 @@
-import { useFonts, Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/inter';
+import { useFonts,Inter_300Light, Inter_400Regular, Inter_500Medium, Inter_700Bold, Inter_800ExtraBold } from '@expo-google-fonts/inter';
 import { StyleSheet, Text, SafeAreaView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Provider } from "react-redux";
@@ -8,8 +8,11 @@ import Home from "./src/navigation/navigation";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
+    Inter_300Light,
     Inter_400Regular,
     Inter_500Medium,
+    Inter_700Bold,
+    Inter_800ExtraBold
   });
 
   if (!fontsLoaded) {
