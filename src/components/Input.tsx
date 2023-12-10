@@ -13,7 +13,13 @@ export const Input = () => {
   );
 };
 
-export const InputWithIcon = ({ iconName }: { iconName: string }) => {
+export const InputWithIcon = ({
+  iconName,
+  placeholder,
+}: {
+  iconName: string;
+  placeholder: string;
+}) => {
   return (
     <View style={styles.inputView}>
       <View style={styles.inputIcon}>
@@ -23,13 +29,13 @@ export const InputWithIcon = ({ iconName }: { iconName: string }) => {
             fontSize: 32,
             width: 32,
             height: 32,
-            color: "rgba(0,0,0,0.2)",
+            color: "rgba(200,0,0,0.8)",
           }}
         />
       </View>
       <TextInput
         style={styles.inputIconInput}
-        placeholder="Enter text"
+        placeholder={placeholder}
         placeholderTextColor="rgba(0,0,0,0.2)"
         cursorColor={"rgba(0,0,0,0.2)"}
       />
