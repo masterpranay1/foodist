@@ -2,7 +2,7 @@ import { Icon } from "@rneui/themed";
 import { View, Text } from "react-native";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
-import { RestaurantCard, SearchInput } from "../components";
+import { RestaurantCard, InputWithIcon } from "../components";
 import { ngrok } from "../constants";
 
 interface Restaurant {
@@ -28,7 +28,7 @@ const Homepage = () => {
     const fetchRestaurants = async () => {
       try {
         // using ngrok to expose localhost to the internet
-        const res = await fetch(`${ngrok}/api/collections/restaurants/records`)
+        const res = await fetch(`${ngrok}/api/collections/restaurants/records`);
         const data = await res.json();
         const restaurants = data.items.map((item: any) => ({
           id: item.id,
@@ -36,7 +36,7 @@ const Homepage = () => {
           rating: item.rating,
         }));
         setRestaurants(restaurants);
-      } catch(err) {
+      } catch (err) {
         console.error(err);
       }
     };
@@ -46,21 +46,25 @@ const Homepage = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <View className="flex-row items-center p-2 gap-2">
-        <Icon name="location-pin" size={48} color="orange" />
-        <Text className="text-md">{address}</Text>
-      </View>
+      <View className="py-2 px-4 shadow-xl shadow-black bg-white">
+        <View className="flex-row items-center">
+          <Icon name="location-pin" size={32} color="rgba(200, 0, 0, 0.8)" />
+          <Text className="text-md ml-2">{address}</Text>
+        </View>
 
-      <View className="m-2 rounded-2xl">
-        <SearchInput placeholder="Search Restaurant"/>
+        <View className=" rounded-2xl">
+          <InputWithIcon
+            iconName="search"
+            placeholder="Search for restaurants"
+          />
+        </View>
       </View>
-
       {restaurants.length > 0 ? (
         <FlatList
           data={restaurants}
           renderItem={({ item }) => <RestaurantCard item={item} />}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ paddingHorizontal: 16 }}
+          contentContainerStyle={{ padding: 16 }}
         />
       ) : (
         <Text className="text-center text-2xl font-bold mt-4">

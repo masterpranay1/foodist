@@ -21,6 +21,9 @@ function AppScreens() {
           paddingBottom: 10,
           height: 64,
         },
+        tabBarLabelStyle: {
+          fontFamily: "Inter_400Regular",
+        },
       }}
       sceneContainerStyle={{
         padding: 0,

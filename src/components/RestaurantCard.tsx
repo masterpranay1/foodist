@@ -1,6 +1,7 @@
-import { View, Text, Image, Pressable } from "react-native";
+import { View, Image, Pressable } from "react-native";
 import { Icon } from "@rneui/base";
 import { useNavigation } from "@react-navigation/native";
+import { Text } from "../components"
 
 interface Restaurant {
   id: string;
@@ -14,17 +15,7 @@ const RestaurantCard = ({ item }: { item: Restaurant }) => {
 
   return (
     <View
-      className="bg-white rounded-2xl mb-8"
-      style={{
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 1,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 5,
-        elevation: 2,
-      }}
+      className="bg-white rounded-2xl mb-8 shadow-md shadow-gray-400"
     >
       <Pressable
         onPress={() => {
@@ -33,11 +24,11 @@ const RestaurantCard = ({ item }: { item: Restaurant }) => {
         }}
       >
         <Image
-          source={{ uri: `https://picsum.photos/200/300?random=${item.id}` }}
-          className="rounded-2xl w-full h-64 mb-2"
+          source={{ uri: `https://picsum.photos/360/640?random=${item.id}` }}
+          className="rounded-t-2xl aspect-video w-full mb-2"
         />
         <View className="flex-row items-center p-4">
-          <Text className="text-2xl font-bold">{item.name}</Text>
+          <Text thickness="bold" className="text-xl w-64">{item.name}</Text>
           <View className="flex-row items-center ml-auto py-2 px-2 rounded-lg bg-green-500">
             <Text className="text-md text-white">{item.rating}</Text>
             <Icon name="star" size={20} color="white" />

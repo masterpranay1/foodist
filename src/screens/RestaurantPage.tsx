@@ -2,7 +2,7 @@ import { Icon } from "@rneui/themed";
 import { View, Text, Pressable } from "react-native";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
-import { RestaurantCard, SearchInput, DishCard } from "../components";
+import { RestaurantCard, DishCard, InputWithIcon } from "../components";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { ngrok } from "../constants";
 
@@ -46,20 +46,24 @@ const RestaurantPage = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <View className="flex-row items-center py-4 px-2">
+      <View className="flex-row items-center pb-2 px-2">
         <Pressable
           onPress={() => {
             navigation.goBack();
           }}
         >
           <Icon
-            name="arrow-back"
-            size={48}
-            color="orange"
+            name="left"
+            size={32}
+            color="rgba(200,0,0, 0.8)"
+            type="ant-design"
           />
         </Pressable>
-        <View className="rounded-2xl w-5/6 ml-auto">
-          <SearchInput placeholder="Search in Res Name" />
+        <View className="rounded-2xl w-5/6 mx-auto">
+          <InputWithIcon
+            iconName="search"
+            placeholder="Search for dishes"
+          />
         </View>
       </View>
 
