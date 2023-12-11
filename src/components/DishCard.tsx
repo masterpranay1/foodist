@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Image } from "react-native";
 import Text from "./Text";
 import { Icon, Button } from "@rneui/themed";
 
@@ -18,7 +18,7 @@ const DishCard: React.FC<DishCardProps> = ({
 }) => {
   return (
     <View className="flex-row py-4 border-b border-dashed border-slate-300">
-      <View className="w-2/3 p-4 gap-1">
+      <View className="w-3/5 p-4 gap-1">
         <View className="flex items-center flex-row">
           {type === "veg" ? (
             <View className="bg-green-50 rounded-lg border border-green-200 p-1">
@@ -48,14 +48,17 @@ const DishCard: React.FC<DishCardProps> = ({
         </Text>
         <Text className="text-sm text-gray-400">{description}</Text>
       </View>
-      <View className="w-1/3 flex-1">
+      <View className="w-2/5 flex-1 px-3">
+        <Image
+          source={{ uri: `https://picsum.photos/400/400?random=1` }}
+          className="rounded-lg aspect-square"
+        />
         <Button
-          title="Buy +"
+          title="Add"
           onPress={() => {
             console.log("Buy button pressed");
           }}
           buttonStyle={{
-            marginTop: 32,
             backgroundColor: "#fff6f7",
             marginHorizontal: 16,
             borderRadius: 12,
@@ -74,6 +77,7 @@ const DishCard: React.FC<DishCardProps> = ({
           }}
           containerStyle={{
             flex: 1,
+            marginTop: "-15%",
           }}
           titleStyle={{
             color: "#ff4d4f",
