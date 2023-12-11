@@ -48,7 +48,7 @@ const RestaurantPage = () => {
   const navigation = useNavigation();
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <View className="flex-row items-center pb-2 px-2">
         <Pressable
           onPress={() => {
@@ -89,7 +89,7 @@ const RestaurantPage = () => {
           <Text className="text-3xl font-bold">No Dishes</Text>
         </View>
       )}
-    </GestureHandlerRootView>
+    </View>
   );
 };
 
