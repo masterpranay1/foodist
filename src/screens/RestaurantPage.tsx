@@ -94,87 +94,96 @@ const RestaurantPage = () => {
           <ActivityIndicator size="large" color="rgba(200,0,0, 0.8)" />
         </View>
       )}
-      <View style={{ flex: 1 }}>
-        <View className="flex-row items-center pb-2 px-2 border-b border-slate-200">
-          <Pressable
-            onPress={() => {
-              navigation.goBack();
-            }}
-          >
-            <Icon
-              name="left"
-              size={32}
-              color="rgba(200,0,0, 0.8)"
-              type="ant-design"
-            />
-          </Pressable>
-          <View className="rounded-2xl w-5/6 mx-auto">
-            <InputWithIcon iconName="search" placeholder="Search for dishes" />
-          </View>
-        </View>
 
-        <View className="flex-col gap-1 items-center justify-center pb-8 my-4 border-b-8 border-slate-200">
-          <Text className="text-2xl" thickness="bold">
-            {restaurant?.name}
-          </Text>
-          <View className="flex-row items-center">
-            {restaurant?.categories.map((category, index) => (
-              <React.Fragment key={index}>
-                <Text
-                  key={index}
-                  className="text-xs text-slate-400"
-                  thickness="medium"
-                >
-                  {category}
-                </Text>
-
-                {restaurant?.categories.length > 1 &&
-                  index < restaurant?.categories.length - 1 && (
-                    <Icon
-                      name="dot-single"
-                      size={24}
-                      color="rgba(0,0,0,0.2)"
-                      type="entypo"
-                    />
-                  )}
-              </React.Fragment>
-            ))}
-          </View>
-          <View className="flex-row items-center">
-            <View className="flex-row items-center mt-2 p-1 rounded-lg bg-[#24963f]">
-              <Text className="text-xs text-white" thickness="bold">
-                {restaurant?.rating}
-              </Text>
-              <Icon name="star" size={12} color="white" />
-            </View>
-            <Text className="ml-4 border-b border-dashed border-slate-200 text-slate-400">
-              4.5k ratings
-            </Text>
-          </View>
-        </View>
-
-        {dishes.length > 0 ? (
-          <FlatList
-            data={dishes}
-            renderItem={({ item }) => (
-              <DishCard
-                dishTitle={item.dishTitle}
-                price={item.price}
-                description={item.description}
-                type={item.type}
+      {restaurant && dishes && (
+        <View style={{ flex: 1 }}>
+          <View className="flex-row items-center pb-2 px-2 border-b border-slate-200">
+            <Pressable
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Icon
+                name="left"
+                size={32}
+                color="rgba(200,0,0, 0.8)"
+                type="ant-design"
               />
-            )}
-            keyExtractor={(item) => item.dishTitle}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={fetchDishes} />
-            }
-          />
-        ) : (
-          <View className="flex-1 items-center justify-center">
-            <Text className="text-3xl font-bold">No Dishes</Text>
+            </Pressable>
+            <View className="rounded-2xl w-5/6 mx-auto">
+              <InputWithIcon
+                iconName="search"
+                placeholder="Search for dishes"
+              />
+            </View>
           </View>
-        )}
-      </View>
+
+          <View className="flex-col gap-1 items-center justify-center pb-8 my-4 border-b-8 border-slate-200">
+            <Text className="text-2xl" thickness="bold">
+              {restaurant?.name}
+            </Text>
+            <View className="flex-row items-center">
+              {restaurant?.categories.map((category, index) => (
+                <React.Fragment key={index}>
+                  <Text
+                    key={index}
+                    className="text-xs text-slate-400"
+                    thickness="medium"
+                  >
+                    {category}
+                  </Text>
+
+                  {restaurant?.categories.length > 1 &&
+                    index < restaurant?.categories.length - 1 && (
+                      <Icon
+                        name="dot-single"
+                        size={24}
+                        color="rgba(0,0,0,0.2)"
+                        type="entypo"
+                      />
+                    )}
+                </React.Fragment>
+              ))}
+            </View>
+            <View className="flex-row items-center">
+              <View className="flex-row items-center mt-2 p-1 rounded-lg bg-[#24963f]">
+                <Text className="text-xs text-white" thickness="bold">
+                  {restaurant?.rating}
+                </Text>
+                <Icon name="star" size={12} color="white" />
+              </View>
+              <Text className="ml-4 border-b border-dashed border-slate-200 text-slate-400">
+                4.5k ratings
+              </Text>
+            </View>
+          </View>
+
+          {dishes.length > 0 ? (
+            <FlatList
+              data={dishes}
+              renderItem={({ item }) => (
+                <DishCard
+                  dishTitle={item.dishTitle}
+                  price={item.price}
+                  description={item.description}
+                  type={item.type}
+                />
+              )}
+              keyExtractor={(item) => item.dishTitle}
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={fetchDishes}
+                />
+              }
+            />
+          ) : (
+            <View className="flex-1 items-center justify-center">
+              <Text className="text-3xl font-bold">No Dishes</Text>
+            </View>
+          )}
+        </View>
+      )}
     </>
   );
 };
