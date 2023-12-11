@@ -49,7 +49,7 @@ const RestaurantPage = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View className="flex-row items-center pb-2 px-2">
+      <View className="flex-row items-center pb-2 px-2 border-b border-slate-200">
         <Pressable
           onPress={() => {
             navigation.goBack();
