@@ -1,6 +1,6 @@
 import { Icon } from "@rneui/themed";
 import { View, Text, Pressable } from "react-native";
-import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
+import { FlatList, GestureHandlerRootView, RefreshControl } from "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
 import { RestaurantCard, DishCard, InputWithIcon } from "../components";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -15,29 +15,33 @@ type DishCardProps = {
 
 const RestaurantPage = () => {
   const [dishes, setDishes] = useState<DishCardProps[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   const route = useRoute();
   const { id } = route.params as { id: string };
 
-  useEffect(() => {
-    const fetchDishes = async () => {
-      try {
-        const res = await fetch(
-          `${POCKETBASE}/api/collections/dishes/records?filter=(restaurant='${id}')`
-        );
-        const data = await res.json();
-        const dishes = data.items.map((record: any) => ({
-          dishTitle: record.name,
-          price: record.price,
-          description: record.description,
-          type: record.type,
-        }));
-        setDishes(dishes);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  const fetchDishes = async () => {
+    try {
+      setRefreshing(true);
+      const res = await fetch(
+        `${POCKETBASE}/api/collections/dishes/records?filter=(restaurant='${id}')`
+      );
+      const data = await res.json();
+      const dishes = data.items.map((record: any) => ({
+        dishTitle: record.name,
+        price: record.price,
+        description: record.description,
+        type: record.type,
+      }));
+      setDishes(dishes);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
+  useEffect(() => {
     fetchDishes();
   }, []);
 
@@ -78,6 +82,7 @@ const RestaurantPage = () => {
             />
           )}
           keyExtractor={(item) => item.dishTitle}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={fetchDishes} />}
         />
       ) : (
         <View className="flex-1 items-center justify-center">

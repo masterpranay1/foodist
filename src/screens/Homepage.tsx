@@ -1,6 +1,10 @@
 import { Icon } from "@rneui/themed";
 import { View, Text } from "react-native";
-import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
+import {
+  FlatList,
+  GestureHandlerRootView,
+  RefreshControl,
+} from "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
 import { RestaurantCard, InputWithIcon } from "../components";
 import { POCKETBASE } from "../constants";
@@ -23,23 +27,29 @@ const Homepage = () => {
   }, [address]);
 
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
+  
+  const fetchRestaurants = async () => {
+    try {
+      setRefreshing(true);
+      const res = await fetch(
+        `${POCKETBASE}/api/collections/restaurants/records`
+      );
+      const data = await res.json();
+      const restaurants = data.items.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+        rating: item.rating,
+      }));
+      setRestaurants(restaurants);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchRestaurants = async () => {
-      try {
-        const res = await fetch(`${POCKETBASE}/api/collections/restaurants/records`);
-        const data = await res.json();
-        const restaurants = data.items.map((item: any) => ({
-          id: item.id,
-          name: item.name,
-          rating: item.rating,
-        }));
-        setRestaurants(restaurants);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
     fetchRestaurants();
   }, []);
 
@@ -64,6 +74,7 @@ const Homepage = () => {
           renderItem={({ item }) => <RestaurantCard item={item} />}
           keyExtractor={(item) => item.id}
           contentContainerStyle={{ padding: 16 }}
+          refreshControl={<RefreshControl onRefresh={fetchRestaurants} refreshing={refreshing} />}
         />
       ) : (
         <Text className="text-center text-2xl font-bold mt-4">

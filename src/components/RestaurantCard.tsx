@@ -1,7 +1,7 @@
 import { View, Image, Pressable } from "react-native";
 import { Icon } from "@rneui/base";
 import { useNavigation } from "@react-navigation/native";
-import { Text } from "../components"
+import Text from "./Text"
 
 interface Restaurant {
   id: string;
