@@ -15,15 +15,15 @@ function AppScreens() {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: "#fff",
-          borderTopWidth: 2,
-          // elevation: 0,
           paddingTop: 10,
           paddingBottom: 10,
           height: 64,
         },
         tabBarLabelStyle: {
-          fontFamily: "Inter_400Regular",
+          fontFamily: "Inter_500Medium",
+          color: "rgba(0,0,0,0.6)",
         },
+        tabBarActiveTintColor: "rgba(200, 0, 0, 0.8)",
       }}
       sceneContainerStyle={{
         padding: 0,
@@ -37,7 +37,7 @@ function AppScreens() {
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home-outline" color={color} size={size} />
+            <Ionicons name="home" color={color} size={size} />
           ),
         }}
       />
@@ -47,7 +47,7 @@ function AppScreens() {
         options={{
           tabBarLabel: "History",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="time-outline" color={color} size={size} />
+            <Ionicons name="time" color={color} size={size} />
           ),
         }}
       />
@@ -57,7 +57,7 @@ function AppScreens() {
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person-outline" color={color} size={size} />
+            <Ionicons name="person" color={color} size={size} />
           ),
         }}
       />

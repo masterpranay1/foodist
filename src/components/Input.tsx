@@ -21,7 +21,7 @@ export const InputWithIcon = ({
   placeholder: string;
 }) => {
   return (
-    <View style={styles.inputView}>
+    <View style={styles.inputView} className="shadow-lg shadow-slate-400">
       <View style={styles.inputIcon}>
         <Icon
           name={iconName}
@@ -72,11 +72,11 @@ const styles = StyleSheet.create({
     color: "#222",
     fontFamily: "Inter_400Regular",
     fontSize: 16,
-    paddingVertical: 12,
+    paddingVertical: 8,
     paddingHorizontal: 12,
     flexGrow: 1,
 
-    borderRadius: 5,
+    borderRadius: 10,
   },
   inputView: {
     backgroundColor: "white",
@@ -87,17 +87,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginVertical: 8,
 
-    shadowColor: "rgba(0,0,0,0.4)",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 4,
-
     borderRadius: 10,
     borderColor: "rgba(0,0,0,0.05)",
+    borderWidth: 1,
   },
   inputIcon: {
     color: "rgba(0,0,0,0.2)",
