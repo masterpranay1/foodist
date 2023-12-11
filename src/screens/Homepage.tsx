@@ -81,18 +81,29 @@ const Homepage = () => {
             />
           </View>
         </View>
+
         {restaurants.length > 0 ? (
           <FlatList
             data={restaurants}
             renderItem={({ item }) => <RestaurantCard item={item} />}
             keyExtractor={(item) => item.id}
-            contentContainerStyle={{ padding: 16 }}
+            contentContainerStyle={{ paddingHorizontal: 16 }}
             refreshControl={
               <RefreshControl
                 onRefresh={fetchRestaurants}
                 refreshing={refreshing}
               />
             }
+            ListHeaderComponent={() => (
+              <View className="flex-1 mb-4">
+                <Text
+                  className="text-sm tracking-wider text-center uppercase text-slate-400"
+                  thickness="light"
+                >
+                  All Restaurants
+                </Text>
+              </View>
+            )}
           />
         ) : (
           <Text className="text-center text-2xl font-bold mt-4">
