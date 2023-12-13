@@ -119,7 +119,7 @@ const RestaurantPage = () => {
           </View>
 
           <View className="flex-col gap-1 items-center justify-center pb-8 my-4 border-b-8 border-slate-200">
-            <Text className="text-2xl" thickness="bold">
+            <Text className="text-xl" thickness="bold">
               {restaurant?.name}
             </Text>
             <View className="flex-row items-center">
@@ -145,14 +145,14 @@ const RestaurantPage = () => {
                 </React.Fragment>
               ))}
             </View>
-            <View className="flex-row items-center">
-              <View className="flex-row items-center mt-2 p-1 rounded-lg bg-[#24963f]">
+            <View className="flex-row items-center pt-2">
+              <View className="flex-row items-center p-1 rounded-lg bg-[#24963f]">
                 <Text className="text-xs text-white" thickness="bold">
                   {restaurant?.rating}
                 </Text>
                 <Icon name="star" size={12} color="white" />
               </View>
-              <Text className="ml-4 border-b border-dashed border-slate-200 text-slate-400">
+              <Text className="text-xs ml-4 border-b border-dashed border-slate-200 text-slate-400">
                 4.5k ratings
               </Text>
             </View>

@@ -40,13 +40,13 @@ const DishCard: React.FC<DishCardProps> = ({
             {type}
           </Text>
         </View>
-        <Text className="text-xl capitalize text-slate-800" thickness="bold">
+        <Text className="text-base capitalize text-slate-800" thickness="bold">
           {dishTitle}
         </Text>
-        <Text className="text-md text-slate-600" thickness="bold">
+        <Text className="text-sm text-slate-600" thickness="bold">
           ₹{price}
         </Text>
-        <Text className="text-sm text-gray-400">{description}</Text>
+        <Text className="text-xs text-gray-500">{description}</Text>
       </View>
       <View className="w-2/5 flex-1 px-3">
         <Image
