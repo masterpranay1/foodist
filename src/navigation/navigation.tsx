@@ -3,10 +3,28 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { Homepage, History, Profile, RestaurantPage } from "../screens";
+import {
+  Homepage,
+  History,
+  Profile,
+  RestaurantPage,
+  Login,
+  Otp,
+} from "../screens";
+import { useEffect, useState } from "react";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
+interface ILoginStatus {
+  status : boolean | string;
+}
+
+const useLoginStatus = () : ILoginStatus => {
+  return {
+    status: false,
+  };
+};
 
 function AppScreens() {
   return (
@@ -66,6 +84,50 @@ function AppScreens() {
 }
 
 const HomeStack = () => {
+  const loggedinStatus = useLoginStatus();
+
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    if(loggedinStatus.status == 'skip' || loggedinStatus.status == true) {
+      setIsLoggedIn(true);
+    }
+  }, [loggedinStatus.status]);
+
+  const LoginScreens = () => {
+    return (
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          contentStyle: {
+            backgroundColor: "#fff",
+          },
+        }}
+        initialRouteName="LoginFirst"
+      >
+        <Stack.Screen name="LoginFirst" component={Login} />
+        <Stack.Screen name="Otp" component={Otp} />
+      </Stack.Navigator>
+    );
+  };
+
+  const OtherScreens = () => {
+    return (
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          contentStyle: {
+            backgroundColor: "#fff",
+          },
+        }}
+        initialRouteName="First"
+      >
+        <Stack.Screen name="First" component={AppScreens} />
+        <Stack.Screen name="RestaurantPage" component={RestaurantPage} />
+      </Stack.Navigator>
+    );
+  };
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -74,13 +136,16 @@ const HomeStack = () => {
           backgroundColor: "#fff",
         },
       }}
-      initialRouteName="First"
+      initialRouteName={isLoggedIn ? "Other" : "Login"}
     >
-      <Stack.Screen name="First" component={AppScreens} />
-      <Stack.Screen name="RestaurantPage" component={RestaurantPage} />
+      {isLoggedIn ? (
+        <Stack.Screen name="Other" component={OtherScreens} />
+      ) : (
+        <Stack.Screen name="Login" component={LoginScreens} />
+      )}
     </Stack.Navigator>
   );
-}
+};
 
 export default function Home() {
   return (
