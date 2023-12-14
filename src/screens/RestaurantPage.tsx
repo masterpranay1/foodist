@@ -158,29 +158,41 @@ const RestaurantPage = () => {
             </View>
           </View>
 
-          {dishes.length > 0 ? (
-            <FlatList
-              data={dishes}
-              renderItem={({ item }) => (
-                <DishCard
-                  dishTitle={item.dishTitle}
-                  price={item.price}
-                  description={item.description}
-                  type={item.type}
+          {refreshing && (
+            <View className="flex-1 items-center justify-center">
+              <ActivityIndicator size="large" color="rgba(200, 0, 0, 0.8)" />
+            </View>
+          )}
+
+          {!refreshing && (
+            <>
+              {dishes.length > 0 && (
+                <FlatList
+                  data={dishes}
+                  renderItem={({ item }) => (
+                    <DishCard
+                      dishTitle={item.dishTitle}
+                      price={item.price}
+                      description={item.description}
+                      type={item.type}
+                    />
+                  )}
+                  keyExtractor={(item) => item.dishTitle}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={fetchDishes}
+                    />
+                  }
                 />
               )}
-              keyExtractor={(item) => item.dishTitle}
-              refreshControl={
-                <RefreshControl
-                  refreshing={refreshing}
-                  onRefresh={fetchDishes}
-                />
-              }
-            />
-          ) : (
-            <View className="flex-1 items-center justify-center">
-              <Text className="text-3xl font-bold">No Dishes</Text>
-            </View>
+
+              {dishes.length === 0 && (
+                <View className="flex-1 items-center justify-center">
+                  <Text className="text-3xl font-bold">No Dishes</Text>
+                </View>
+              )}
+            </>
           )}
         </View>
       )}
