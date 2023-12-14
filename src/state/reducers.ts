@@ -1,29 +1,73 @@
-// TODO : Add the reducer for the new action
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { createSlice } from "@reduxjs/toolkit";
+interface ILoginInitialState {
+  mobileNumber: string;
+  otp: string;
+  status: string;
+  otpSendStatus: string;
+  otpBufferTime: number;
+}
 
-const userSlice = createSlice({
-  name: "SET_USER",
-  initialState: null,
+const loginInitialState : ILoginInitialState = {
+  mobileNumber: "",
+  otp: "",
+  status: "",
+  otpSendStatus: "not-sent",
+  otpBufferTime: 0,
+};
+
+export const sendOtp = createAsyncThunk(
+  "sendOtp",
+  async (data : {
+    mobileNumber: string;
+    otp: string;
+  }, thunkAPI) => {
+    try {
+      // TODO : create a service to send otp
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          thunkAPI.dispatch(setLoginOtp(data.otp));
+          thunkAPI.dispatch(setLoginmobileNumber(data.mobileNumber));
+          thunkAPI.dispatch(setOtpBufferTime(60));
+          resolve({ status: "success" });
+        }, 4000);
+      })
+      return { status: "success" };
+    } catch (error) {
+      return thunkAPI.rejectWithValue('Error Sending OTP');
+    }
+  }
+)
+
+const loginSlice = createSlice({
+  name: "SET_LOGIN_PHONE_NUMBER",
+  initialState: loginInitialState,
   reducers: {
-    setUser: (state, action) => {
-      return action.payload;
+    setLoginmobileNumber: (state, action) => {
+      return { ...state, mobileNumber: action.payload };
     },
+    setLoginOtp: (state, action) => {
+      return { ...state, otp: action.payload };
+    },
+    setLoginStatus: (state, action) => {
+      return { ...state, status: action.payload };
+    },
+    setOtpBufferTime: (state, action) => {
+      return { ...state, otpBufferTime: action.payload };
+    }
   },
+  extraReducers: (builder) => {
+    builder.addCase(sendOtp.pending, (state, action) => {
+      return { ...state, otpSendStatus: "pending" };
+    });
+    builder.addCase(sendOtp.fulfilled, (state, action) => {
+      return { ...state, otpSendStatus: "success" };
+    });
+    builder.addCase(sendOtp.rejected, (state, action) => {
+      return { ...state, otpSendStatus: "failed" };
+    });
+  }
 });
 
-const loadingSlice = createSlice({
-  name: "SET_LOADING",
-  initialState: false,
-  reducers: {
-    setLoading: (state, action) => {
-      return action.payload;
-    },
-  },
-});
-
-
-export const { setUser } = userSlice.actions;
-export const { setLoading } = loadingSlice.actions;
-export const userReducer = userSlice.reducer;
-export const loadingReducer = loadingSlice.reducer;
+export const { setLoginmobileNumber, setLoginOtp, setLoginStatus, setOtpBufferTime } = loginSlice.actions;
+export const loginReducer = loginSlice.reducer;
