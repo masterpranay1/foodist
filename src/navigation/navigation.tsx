@@ -94,6 +94,9 @@ const HomeStack = () => {
     if(loggedinStatus.status == 'skip' || loggedinStatus.status == true) {
       setIsLoggedIn(true);
       setLoading(false);
+    } else {
+      setIsLoggedIn(false);
+      setLoading(false);
     }
   }, [loggedinStatus.status]);
 
@@ -134,7 +137,7 @@ const HomeStack = () => {
   if (loading) {
     return (
       <View>
-        <ActivityIndicator size="large" color="rgba(200, 0, 0, 0.8)" />
+        <ActivityIndicator size="large" color="rgba(200, 0, 0, 0.8)" /> 
       </View>
     )
   }
