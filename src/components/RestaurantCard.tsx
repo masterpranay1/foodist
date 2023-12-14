@@ -14,12 +14,12 @@ interface Restaurant {
 
 const RestaurantCard = ({ item }: { item: Restaurant }) => {
   const navigation = useNavigation();
-
+  const [rating, setRating] = useState(item.rating);
   useEffect(() => {
     if (!(item.rating.split(".").length > 1)) {
-      item.rating = item.rating + ".0";
+      setRating(item.rating + ".0");
     }
-  }, [item]);
+  }, [item.rating]);
 
   return (
     <View className="bg-white rounded-2xl mb-8 shadow-lg shadow-gray-400">
@@ -41,7 +41,7 @@ const RestaurantCard = ({ item }: { item: Restaurant }) => {
             </Text>
             <View className="flex-row items-center mt-2 ml-auto p-1 rounded-lg bg-[#24963f]">
               <Text className="text-xs text-white" thickness="bold">
-                {item.rating}
+                {rating}
               </Text>
               <Icon name="star" size={12} color="white" />
             </View>
