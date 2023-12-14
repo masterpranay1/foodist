@@ -12,6 +12,7 @@ import {
   Otp,
 } from "../screens";
 import { useEffect, useState } from "react";
+import { ActivityIndicator, View } from "react-native";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -87,10 +88,12 @@ const HomeStack = () => {
   const loggedinStatus = useLoginStatus();
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if(loggedinStatus.status == 'skip' || loggedinStatus.status == true) {
       setIsLoggedIn(true);
+      setLoading(false);
     }
   }, [loggedinStatus.status]);
 
@@ -127,6 +130,14 @@ const HomeStack = () => {
       </Stack.Navigator>
     );
   };
+
+  if (loading) {
+    return (
+      <View>
+        <ActivityIndicator size="large" color="rgba(200, 0, 0, 0.8)" />
+      </View>
+    )
+  }
 
   return (
     <Stack.Navigator
