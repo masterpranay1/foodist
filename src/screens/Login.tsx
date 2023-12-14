@@ -3,9 +3,20 @@ import { Text, Button } from "../components";
 import { TextInput } from "react-native-gesture-handler";
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setLoginmobileNumber,
+  setLoginStatus,
+  setLoginOtp,
+  sendOtp,
+  setOtpBufferTime,
+} from "../state/reducers";
+import { ThunkDispatch } from "redux-thunk";
 
 const Header = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   return (
     <View className="w-full h-64 bg-red-700 items-center justify-center relative">
       <Icon name="pizza-slice" color="white" size={48} type="font-awesome-5" />
@@ -15,8 +26,7 @@ const Header = () => {
       <Pressable
         className="absolute right-5 top-5"
         onPress={() => {
-          // @ts-ignore
-          navigation.navigate("Home");
+          dispatch(setLoginStatus("skip"));
         }}
       >
         <Text className="bg-gray-200 text-slate-400 py-2 px-4 text-xs rounded-full">
@@ -29,6 +39,42 @@ const Header = () => {
 
 const FormArea = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const dispatchThunk = useDispatch<ThunkDispatch<any, any, any>>();
+  const [mobileNumber, setMobileNumber] = useState(
+    useSelector((state: any) => state.auth.mobileNumber)
+  );
+  const otpSendStatus = useSelector((state: any) => state.auth.otpSendStatus);
+  const otpBufferTime = useSelector((state: any) => state.auth.otpBufferTime);
+
+  const [routeToOtp, setRouteToOtp] = useState(false);
+
+  useEffect(() => {
+    if (!routeToOtp) {
+      return;
+    }
+
+    if (otpSendStatus === "success") {
+      setRouteToOtp(false);
+      // @ts-ignore
+      navigation.navigate("Otp");
+    } else if(otpSendStatus === "reject") {
+      setRouteToOtp(false);
+    }
+  }, [otpSendStatus]);
+
+  useEffect(() => {
+    if(otpBufferTime === 0) {
+      return;
+    } 
+
+    const timeOut = setTimeout(() => {
+      dispatch(setOtpBufferTime(otpBufferTime - 1));
+    }, 1000)
+
+    return () => clearInterval(timeOut)
+
+  }, [otpBufferTime])
 
   return (
     <View className="mb-4 mx-4">
@@ -65,15 +111,38 @@ const FormArea = () => {
           }}
           cursorColor={"rgba(0,0,0,0.2)"}
           keyboardType="numeric"
+          value={mobileNumber}
+          onChange={(e) => {
+            setMobileNumber(e.nativeEvent.text);
+          }}
         />
       </View>
 
       <Button
         title="Continue"
-        onPress={() => {
-          // @ts-ignore
-          navigation.navigate("Otp");
+        onPress={async () => {
+          if (mobileNumber.length !== 10) {
+            return;
+          }
+          if (routeToOtp === true || otpSendStatus === "pending") {
+            return;
+          }
+
+          if(otpBufferTime > 0) {
+            return;
+          }
+
+          // TODO : Create a service to send OTP
+          dispatchThunk(
+            sendOtp({
+              mobileNumber: mobileNumber,
+              otp: "1234",
+            })
+          );
+
+          setRouteToOtp(true);
         }}
+        loading={routeToOtp === true && otpSendStatus === "pending"}
       />
     </View>
   );

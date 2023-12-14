@@ -13,6 +13,7 @@ import {
 } from "../screens";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
+import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -22,8 +23,11 @@ interface ILoginStatus {
 }
 
 const useLoginStatus = () : ILoginStatus => {
+
+  const status = useSelector((state: any) => state.auth.status);
+
   return {
-    status: false,
+    status: status,
   };
 };
 
@@ -91,7 +95,7 @@ const HomeStack = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if(loggedinStatus.status == 'skip' || loggedinStatus.status == true) {
+    if(loggedinStatus.status == 'skip' || loggedinStatus.status == "loggedin") {
       setIsLoggedIn(true);
       setLoading(false);
     } else {
