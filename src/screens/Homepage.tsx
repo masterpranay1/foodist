@@ -112,13 +112,15 @@ const Homepage = () => {
                   />
                 }
                 ListHeaderComponent={() => (
-                  <View className="flex-1 mb-4">
+                  <View className="flex-row items-center mb-4 w-full">
+                    <View className="border-b border-gray-200 flex-1"></View>
                     <Text
-                      className="text-sm tracking-wider text-center uppercase text-slate-400"
+                      className="mx-4 text-sm tracking-wider text-center uppercase text-slate-400"
                       thickness="light"
                     >
                       All Restaurants
                     </Text>
+                    <View className="border-b border-gray-200 flex-1"></View>
                   </View>
                 )}
               />

@@ -17,19 +17,20 @@ const DishCard: React.FC<DishCardProps> = ({
   type,
 }) => {
   return (
-    <View className="flex-row py-4 border-b border-dashed border-slate-300">
+    <View className="flex-row py-6 border-b border-dashed border-slate-300">
       <View className="w-3/5 p-4 gap-1">
         <View className="flex items-center flex-row">
           {type === "veg" ? (
-            <View className="bg-green-50 rounded-lg border border-green-200 p-1">
-              <Icon name="circle" color="green" size={16} />
+            <View className="bg-green-50 rounded-md border border-green-200 p-0.5">
+              <Icon name="circle" color="green" size={12} />
             </View>
           ) : (
-            <View className="bg-red-50 rounded-lg border border-red-200">
+            <View className="bg-red-50 rounded-md border border-red-200 p-0">
               <Icon
                 name="triangle-up"
                 type="entypo"
                 color="rgba(200, 0, 0, 0.8)"
+                size={16}
               />
             </View>
           )}
