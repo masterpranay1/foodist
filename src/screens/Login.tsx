@@ -57,7 +57,7 @@ const FormArea = () => {
       >
         <Text>+91</Text>
         <TextInput
-          placeholder="Enter your email"
+          placeholder="Enter your mobile number"
           placeholderTextColor="rgba(0,0,0,0.2)"
           className="px-2 flex-1"
           style={{
@@ -81,7 +81,7 @@ const FormArea = () => {
 
 const Footer = () => {
   return (
-    <Text className="text-center text-slate-400 m-12 mt-8">
+    <Text className="text-center text-slate-600 m-12 mt-8">
       By logging in or signing up, you agree to our Terms and Conditions and
       Privacy Policy.
     </Text>
